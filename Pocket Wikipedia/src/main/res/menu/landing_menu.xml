@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_close_application"
+        android:title="@string/menu_close_application"
+        android:showAsAction="never"/>
+</menu><!-- From: file:/C:/Users/Pete/Desktop/adk/extras/google/google_play_services/libproject/PocketWiki/Pocket%20Wikipedia/src/main/res/menu/landing_menu.xml -->

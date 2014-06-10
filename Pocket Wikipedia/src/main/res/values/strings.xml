@@ -1,0 +1,18 @@
+<resources>
+    <string name="label">Label</string>
+
+    <string name="app_name">Pocket Wikipedia</string>
+    <string name="search_hint">Search Hint</string>
+    <string name="search_wikipedia">Search Wikipedia</string>
+    <string name="language_id">english</string>
+    <string name="loading_main_page">Loading main page</string>
+    <string name="open_navigation">Open Navigation</string>
+    <string name="close_navigation">Close Navigation</string>
+    <string name="copied_to_clipboard">Copied to Clipboard</string>
+
+    <string name="menu_close_application">Close Application</string>
+    <string name="menu_share_article">Share Article</string>
+    <string name="summary">Summary</string>
+    <string name="no_article_exists_for">No article exists for</string>
+    <string name="images">Images</string>
+</resources>

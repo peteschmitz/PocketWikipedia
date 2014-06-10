@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/article_data_view_background">
+
+    <LinearLayout
+        android:id="@+id/article_data_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/article_divider">
+
+        <TextView
+            android:id="@+id/article_data_index_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/article_data_view_title"
+            android:gravity="bottom"
+            android:textSize="18sp"
+            android:paddingRight="5dp"
+            android:paddingLeft="26dp"
+            android:textColor="@color/text_light_grey"/>
+
+        <TextView
+            android:id="@+id/article_data_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/article_data_view_title"
+            android:paddingLeft="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="28dp"
+            android:paddingBottom="5dp">
+            <ImageButton
+                android:id="@+id/article_data_share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_share"
+                android:background="@color/transparent"
+                android:layout_gravity="bottom"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,75 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.Sherlock.Light">
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/actionbar</item>
+        <item name="android:background">@drawable/actionbar</item>
+    </style>
+
+    <style name="gallery" parent="@style/Theme.Sherlock.NoActionBar" />
+
+    <style name="drawer_wrapper">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="left_drawer">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:divider">@color/light_grey</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:background">@color/card_background</item>
+    </style>
+
+    <style name="article_data_view_background">
+        <item name="android:background">@color/card_background</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+    </style>
+
+    <style name="article_drawer_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
+    </style>
+
+    <style name="article_data_view_title">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
+        <item name="android:paddingTop">34dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <style name="article_data_view_text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+        <item name="android:paddingTop">13dp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <style name="article_image_preview">
+        <item name="android:layout_width">@dimen/thumbnail_size</item>
+        <item name="android:layout_height">@dimen/thumbnail_size</item>
+        <item name="android:layout_margin">3dp</item>
+    </style>
+
+</resources>

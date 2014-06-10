@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="placeholder_scale" format="float" type="dimen">0.3</item>
+    <item name="thumbnail_size" format="dimension" type="dimen">100dp</item>
+    <item name="thumbnail_adapter_height" format="dimension" type="dimen">110dp</item>
+</resources>

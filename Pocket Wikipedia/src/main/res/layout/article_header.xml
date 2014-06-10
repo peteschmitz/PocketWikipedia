@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    android:paddingBottom="15dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:id="@+id/article_header_image"
+        android:background="@color/placeholder_red"/>
+    <LinearLayout
+        android:id="@+id/article_header_gradient"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        android:layout_alignBottom="@id/article_header_image"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/vertical_shadow_gradient"/>
+
+    <LinearLayout
+        android:id="@+id/article_header_divider"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/card_background"
+        android:layout_below="@id/article_header_image" >
+
+
+        <TextView
+            android:id="@+id/article_header_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/text_light_grey"
+            android:text="@string/label"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="115dp"/>
+        </LinearLayout>
+
+    <ImageView
+        android:id="@+id/article_header_icon"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:background="@color/card_background"
+        android:layout_alignBottom="@id/article_header_divider"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="invisible"
+        android:padding="5dp"/>
+
+
+</RelativeLayout>

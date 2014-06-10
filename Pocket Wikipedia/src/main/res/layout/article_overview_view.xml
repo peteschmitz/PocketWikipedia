@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background= "@drawable/card"
+                android:id="@+id/article_overview_layout"
+                android:layout_margin="10dp">
+
+    <LinearLayout
+        android:id="@+id/article_overview_image_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@color/placeholder_red"
+        android:gravity="center">
+
+        <ImageView
+            android:scaleY="@dimen/placeholder_scale"
+            android:scaleX="@dimen/placeholder_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wikipedia_logo"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/article_overview_image_container"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"/>
+
+        <TextView
+            android:id="@+id/article_overview_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/text_grey"
+            android:textColorLink="@color/text_grey_link"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:text="@string/label"/>
+    </LinearLayout>
+
+</RelativeLayout>

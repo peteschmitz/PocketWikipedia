@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="placeholder_colors">
+        <item>@color/placeholder_red</item>
+        <item>@color/placeholder_orange</item>
+        <item>@color/placeholder_green</item>
+        <item>@color/placeholder_blue</item>
+        <item>@color/placeholder_purple</item>
+    </integer-array>
+
+    <integer-array name="highlight_colors">
+        <item>@color/highlight_red</item>
+        <item>@color/highlight_orange</item>
+        <item>@color/highlight_green</item>
+        <item>@color/highlight_blue</item>
+        <item>@color/highlight_purple</item>
+    </integer-array>
+
+    <integer-array name="lowlight_colors">
+        <item>@color/lowlight_red</item>
+        <item>@color/lowlight_orange</item>
+        <item>@color/lowlight_green</item>
+        <item>@color/lowlight_blue</item>
+        <item>@color/lowlight_purple</item>
+    </integer-array>
+
+    <integer-array name="text_colors">
+        <item>@color/text_red</item>
+        <item>@color/text_orange</item>
+        <item>@color/text_green</item>
+        <item>@color/text_blue</item>
+        <item>@color/text_purple</item>
+    </integer-array>
+</resources>

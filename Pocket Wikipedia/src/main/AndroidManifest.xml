@@ -1,0 +1,50 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.peteschmitz.android.pocketwikipedia">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".activity.LandingActivity"
+            android:launchMode="singleTop">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/wikipedia_searchable"/>
+        </activity>
+
+        <activity android:name=".activity.GalleryActivity"
+            android:theme="@style/gallery"/>
+
+        <activity android:name=".activity.ArticleActivity">
+            <intent-filter>
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="en.wikipedia.org" android:pathPrefix="/wiki"  />
+                <data android:host="en.m.wikipedia.org" android:pathPrefix="/wiki" />
+
+                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/wikipedia_searchable"/>
+        </activity>
+
+    </application>
+
+</manifest>
