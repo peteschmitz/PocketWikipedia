@@ -353,11 +353,17 @@ public class ArticleActivity
                 .start();
     }
 
-    private void loadArticle(String encodedArticle) {
+    private void loadArticle(final String encodedArticle) {
 
         mCurrentArticle = encodedArticle;
 
-        findHeaderIconImage(encodedArticle);
+        // Async must be started on UI thread
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                findHeaderIconImage(encodedArticle);
+            }
+        });
 
         setHeaderTitle(mCurrentArticle);
 
