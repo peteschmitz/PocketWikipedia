@@ -393,10 +393,12 @@ public class ArticleActivity
             JSONObject body = object.getJSONObject("parse");
 
             final JSONArray images = body.getJSONArray("images");
-            findBackgroundImage(images);
+
+            // Async must be started on UI thread
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    findBackgroundImage(images);
                     mArticleImageView.setImages(WikiArticleImageTask.getImages(images));
                 }
             });
