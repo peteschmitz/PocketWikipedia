@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class Wikipedia {
 
+    public static final int NAMESPACE_MAIN = 0;
+
     public static final String FILE = "File:";
     public static final String ACTION = "&action=";
     public static final String SECTION = "&section=";
@@ -25,7 +27,12 @@ public class Wikipedia {
     public static final String IMAGE_INFO = "imageinfo";
     public static final String URL = "url";
     public static final String REDIRECTS = "&redirects";
+    public static final String LIST = "&list=";
     public static final String SIZE = "size";
+    private static final String SPECIAL_RANDOM = "Special:Random";
+    public static final String RANDOM = "random";
+    public static final String RANDOM_LIMIT = "&rnlimit=";
+    public static final String RANDOM_NAMESPACE = "&rnnamespace=";
     public static Language LANGUAGE;
     public static String BASE_API_URL;
     private static final String UPLOAD_URL = "http://upload.wikimedia.org/wikipedia/";
@@ -59,6 +66,11 @@ public class Wikipedia {
         languageCheck();
 
         return BASE_API_URL + SEARCH + query + ACTION_OPENSEARCH;
+    }
+    
+    @NotNull
+    public static String getRandomArticleURL(){
+        return getBaseArticleURL() + SPECIAL_RANDOM;
     }
 
     private static void languageCheck(){

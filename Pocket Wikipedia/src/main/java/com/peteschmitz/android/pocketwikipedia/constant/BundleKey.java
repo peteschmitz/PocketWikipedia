@@ -11,4 +11,5 @@ public class BundleKey {
     public static final String IMAGES = "images";
     public static final String COLOR_INDEX = "colorIndex";
     public static final String GALLERY_INDEX = "galleryIndex";
+    public static final String RANDOM_ARTICLE_SUMMARY = "randomArticleSummary";
 }

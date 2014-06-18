@@ -375,7 +375,7 @@ public class ArticleActivity
                 .start();
     }
 
-    public void onQuerySuccess(@NotNull JSONObject object, String requestId) {
+    public void onQuerySuccess(@NotNull QueryWikipedia query, @NotNull JSONObject object, String requestId) {
         if (requestId.equals(QueryWikipedia.REQUEST_REDIRECT)) {
             processRedirect(object);
 
@@ -469,7 +469,7 @@ public class ArticleActivity
 
                 // Redirect found; recursively re-query until an article is found
                 String redirect = redirects.getJSONObject(0).getString("to");
-                requestRedirect(Uri.encode(redirect.replace(" ", "_")));
+                requestRedirect(redirect.replace(" ", "_"));
             }
 
         } catch (JSONException e) {

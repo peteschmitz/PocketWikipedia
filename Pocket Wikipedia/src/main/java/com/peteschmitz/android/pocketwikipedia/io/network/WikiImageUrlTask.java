@@ -41,7 +41,7 @@ public class WikiImageUrlTask extends AsyncTask<Void, Void, ArrayList<ImageEvalu
     protected ArrayList<ImageEvaluation> doInBackground(Void... params) {
         new QueryWikipedia(mContext, new QueryWikipedia.Callback() {
             @Override
-            public void onQuerySuccess(@NotNull JSONObject object, String requestId) {
+            public void onQuerySuccess(@NotNull QueryWikipedia queryInstance, @NotNull JSONObject object, String requestId) {
 
                 try {
                     JSONObject query = object.getJSONObject("query");

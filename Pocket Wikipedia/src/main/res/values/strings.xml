@@ -15,4 +15,5 @@
     <string name="summary">Summary</string>
     <string name="no_article_exists_for">No article exists for</string>
     <string name="images">Images</string>
+    <string name="random_article">Random Article</string>
 </resources>

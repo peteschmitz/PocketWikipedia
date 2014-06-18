@@ -1,6 +1,7 @@
 package com.peteschmitz.android.pocketwikipedia.io.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.peteschmitz.android.pocketwikipedia.R;
 import com.peteschmitz.android.pocketwikipedia.constant.Wikipedia;
@@ -8,6 +9,7 @@ import com.peteschmitz.android.pocketwikipedia.language.LanguageKey;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,20 +30,23 @@ import java.util.List;
  */
 public class QueryWikipedia extends Thread {
 
+    private static final String TAG = "pwiki query wikipedia";
+
     public static final String REQUEST_NONE = "requestNone";
     public static final String REQUEST_FRONT_PAGE = "requestFrontPage";
     public static final String REQUEST_ARTICLE = "requestArticle";
     public static final String REQUEST_REDIRECT = "requestRedirect";
 
     public interface Callback {
-        void onQuerySuccess(@NotNull JSONObject object, String requestId);
+        void onQuerySuccess(@NotNull QueryWikipedia query, @NotNull JSONObject object, String requestId);
 
         void onQueryFailure(Exception exception, String requestId);
     }
 
     private final Callback mCallback;
-    private final StringBuilder mBuilder = new StringBuilder();
-    private final String mRequestId;
+    private StringBuilder mBuilder = new StringBuilder();
+    private String mRequestId;
+    private volatile boolean mShouldContinue = true;
 
     public QueryWikipedia(@NotNull Context mContext, @Nullable Callback callback) {
         this(mContext, callback, REQUEST_NONE);
@@ -49,24 +54,65 @@ public class QueryWikipedia extends Thread {
 
     public QueryWikipedia(@NotNull Context mContext, @Nullable Callback callback, String requestId) {
         LanguageKey.setLanguage(mContext.getString(R.string.language_id));
-        mBuilder.append(Wikipedia.BASE_API_URL);
+        reset();
+        setRequest(requestId);
         mCallback = callback;
+    }
+
+    public QueryWikipedia setRequest(String requestId){
         mRequestId = requestId;
+
+        return this;
+    }
+
+    public QueryWikipedia reset(){
+        mBuilder = new StringBuilder();
+        mBuilder.append(Wikipedia.BASE_API_URL);
+
+        return this;
     }
 
     @Override
     public void run() {
+        if (!mShouldContinue) return;
+
         String request = mBuilder.toString();
+        Log.d(TAG, "Request: " + request);
 
         try {
             String response = readJsonFromUrl(request);
+            if (!mShouldContinue) return;
 
             JSONObject responseObject = new JSONObject(response);
-            if (mCallback != null) mCallback.onQuerySuccess(responseObject, mRequestId);
+            if (!mShouldContinue) return;
+
+            if (mCallback != null) mCallback.onQuerySuccess(this, responseObject, mRequestId);
         } catch (IOException e) {
             if (mCallback != null) mCallback.onQueryFailure(e, mRequestId);
         } catch (JSONException e) {
             if (mCallback != null) mCallback.onQueryFailure(e, mRequestId);
+        }
+    }
+
+    public static boolean hasRedirect(@NotNull JSONObject queryObject){
+        try {
+            JSONObject query = queryObject.getJSONObject("query");
+
+            // No redirects found; load article
+            if (!query.has("redirects")) {
+                return false;
+            }
+
+            JSONArray redirects = query.getJSONArray("redirects");
+
+            if (redirects.length() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (JSONException e) {
+            return false;
         }
     }
 
@@ -88,6 +134,22 @@ public class QueryWikipedia extends Thread {
             sb.append((char) cp);
         }
         return sb.toString();
+    }
+
+    @Nullable
+    public static String getRedirect(@NotNull JSONObject queryObject){
+
+        try {
+            String redirect = queryObject.getJSONObject("query")
+                    .getJSONArray("redirects")
+                    .getJSONObject(0)
+                    .getString("to");
+
+            return redirect.replace(" ", "_");
+        } catch (JSONException e) {
+            Log.e(TAG, "Couldn't parse redirection: " + e.getMessage());
+            return null;
+        }
     }
 
     private void appendList(List<String> additionList) {
@@ -157,4 +219,31 @@ public class QueryWikipedia extends Thread {
         mBuilder.append(Wikipedia.REDIRECTS);
         return this;
     }
+
+    public QueryWikipedia list(String type) {
+        mBuilder.append(Wikipedia.LIST).append(type);
+        return this;
+    }
+
+    public QueryWikipedia randomLimit(int limit) {
+        mBuilder.append(Wikipedia.RANDOM_LIMIT).append(Integer.toString(limit));
+        return this;
+    }
+
+    public QueryWikipedia randomNamespace(int namespaceId) {
+        mBuilder.append(Wikipedia.RANDOM_NAMESPACE).append(Integer.toString(namespaceId));
+        return this;
+    }
+
+    public QueryWikipedia firstSection(){
+        mBuilder.append(Wikipedia.SECTION_FIRST);
+
+        return this;
+    }
+
+    public void setShouldContinue(boolean shouldContinue){
+        mShouldContinue = shouldContinue;
+    }
+
+
 }

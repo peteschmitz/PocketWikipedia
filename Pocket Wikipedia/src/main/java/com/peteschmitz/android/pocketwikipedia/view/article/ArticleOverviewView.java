@@ -2,6 +2,7 @@ package com.peteschmitz.android.pocketwikipedia.view.article;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
@@ -35,10 +36,10 @@ public class ArticleOverviewView extends LinearLayout implements Callback {
 
     private static final float DEFAULT_RESTRICTED_WIDTH_PERCENTAGE = 0.75f;
 
-    private WikiLinkUtils.LinkListener mLinkListener;
+    protected WikiLinkUtils.LinkListener mLinkListener;
     private VerticalSpaceListener mSpaceListener;
     private WikiArticleImageTask.FullQueryListener mFullQueryListener;
-    private Holder mHolder;
+    protected Holder mHolder;
     private Context mContext;
     private View mHeaderView;
     private int mLinkColor;
@@ -121,7 +122,7 @@ public class ArticleOverviewView extends LinearLayout implements Callback {
         mHolder.imagePlaceholder.setBackgroundColor(color);
     }
 
-    private void resetPlaceholderAndImage(){
+    protected void resetPlaceholderAndImage(){
         setPlaceholderColor(mPlaceholderColor);
         Picasso.with(mContext)
                 .cancelRequest(mHolder.imageContainer);
@@ -129,8 +130,7 @@ public class ArticleOverviewView extends LinearLayout implements Callback {
     }
 
     public void setFrom(FrontPageSectionData.ListItem item, final int position) {
-        mHolder.textView.setText(item.spanned);
-        WikiTextUtils.applySpannableLinkStyle(mHolder.textView, mLinkColor, mLinkListener);
+        setText(item.spanned);
 
         setImageFromArticle(item.getSuggestedArticle());
 
@@ -143,6 +143,11 @@ public class ArticleOverviewView extends LinearLayout implements Callback {
             });
 
         }
+    }
+
+    public void setText(final Spanned text){
+        mHolder.textView.setText(text);
+        WikiTextUtils.applySpannableLinkStyle(mHolder.textView, mLinkColor, mLinkListener);
     }
 
     public void setImageFromArticle(final String encodedArticle){
@@ -222,7 +227,7 @@ public class ArticleOverviewView extends LinearLayout implements Callback {
 
     }
 
-    private class Holder{
+    protected class Holder{
         LinearLayout imagePlaceholder;
         ImageView imageContainer;
         TextView textView;

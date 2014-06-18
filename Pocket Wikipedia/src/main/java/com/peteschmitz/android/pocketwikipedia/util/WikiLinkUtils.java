@@ -29,7 +29,7 @@ public class WikiLinkUtils {
 //                return;
 //            }
 
-            ArticleActivity.launch(activity, url.split("/wiki/")[1]);
+            ArticleActivity.launch(activity, Uri.decode(url.split("/wiki/")[1]));
         } else if (url.contains("//")){
             if (!url.contains("http://") && !url.contains("https://")){
                 url = url.replace("//", "http://");
