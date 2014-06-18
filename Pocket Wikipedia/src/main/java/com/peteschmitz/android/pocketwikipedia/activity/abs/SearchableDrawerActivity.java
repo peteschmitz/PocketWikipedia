@@ -13,7 +13,7 @@ import com.peteschmitz.android.pocketwikipedia.R;
 /**
  * Created by Pete Schmitz on 4/28/2014.
  */
-public abstract class SearchableDrawerActivity<T> extends SearchableWikipediaActivity {
+public abstract class SearchableDrawerActivity<T, DrawerAdapter extends ArrayAdapter<T>> extends SearchableWikipediaActivity {
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -24,7 +24,8 @@ public abstract class SearchableDrawerActivity<T> extends SearchableWikipediaAct
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
     }
 
-    protected abstract ArrayAdapter<T> getDrawerAdapter();
+
+    protected abstract DrawerAdapter getDrawerAdapter();
 
     protected ListView getDrawerListView() {
         findIds();

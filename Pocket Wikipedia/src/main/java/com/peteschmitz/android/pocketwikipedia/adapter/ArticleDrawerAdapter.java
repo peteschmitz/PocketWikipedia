@@ -1,6 +1,7 @@
 package com.peteschmitz.android.pocketwikipedia.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,10 +18,15 @@ import org.jetbrains.annotations.Nullable;
  * Created by Pete Schmitz on 4/18/2014.
  */
 public class ArticleDrawerAdapter
-        extends ArrayAdapter<ArticleData> {
+        extends ArrayAdapter<ArticleData> implements ArticleDataAdapter.ActiveTitleListener {
 
-    public ArticleDrawerAdapter(Context context) {
+    private ArticleData mActiveTitle;
+    private int mHighlightColor;
+
+    public ArticleDrawerAdapter(Context context, int highlightColor) {
         super(context, R.layout.article_drawer_view_one);
+
+        mHighlightColor = highlightColor;
     }
 
     public int getViewTypeCount() {
@@ -36,10 +42,18 @@ public class ArticleDrawerAdapter
         ArticleData item = getItem(position);
         DrawerTitleView view = (DrawerTitleView) convertView;
         if (view == null) {
-            view = new DrawerTitleView(getContext());
+            view = new DrawerTitleView(getContext(), mHighlightColor);
         }
         view.setData(item);
+        view.setHighlight(mActiveTitle == item);
 
         return view;
+    }
+
+    @Override
+    public void onActiveTitleChanged(ArticleData activeTitle) {
+        mActiveTitle = activeTitle;
+        notifyDataSetChanged();
+        Log.d("pwiki drawer adapter", "Title Changed to: " + activeTitle.title);
     }
 }

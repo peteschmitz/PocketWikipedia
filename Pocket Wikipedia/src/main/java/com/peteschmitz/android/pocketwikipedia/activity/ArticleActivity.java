@@ -11,7 +11,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
@@ -50,7 +49,7 @@ import java.util.Random;
  * Created by Pete Schmitz on 4/26/14
  */
 public class ArticleActivity
-        extends SearchableDrawerActivity<ArticleData>
+        extends SearchableDrawerActivity<ArticleData, ArticleDrawerAdapter>
         implements QueryWikipedia.Callback, ArticleData.OnItemBuiltListener, WikiLinkUtils.LinkListener,
         ImageEvaluation.BuildListener {
 
@@ -64,6 +63,7 @@ public class ArticleActivity
     private int mBackgroundColor;
     private int mColorIndex;
     private int mLowlightColor;
+    private int mHighlightColor;
     private ArticleDrawerAdapter mArticleDrawerAdapter;
     private String mTopicQueue;
     private ArticleImagePreviewView mArticleImageView;
@@ -122,6 +122,7 @@ public class ArticleActivity
         mLinkColor = getResources().getIntArray(R.array.text_colors)[mColorIndex];
         mLowlightColor = getResources().getIntArray(R.array.lowlight_colors)[mColorIndex];
         mBackgroundColor = getResources().getIntArray(R.array.placeholder_colors)[mColorIndex];
+        mHighlightColor = getResources().getIntArray(R.array.highlight_colors)[mColorIndex];
     }
 
     @Override
@@ -220,16 +221,17 @@ public class ArticleActivity
         this.mListView = ((ListView) findViewById(R.id.article_list_view));
     }
 
-    protected ArrayAdapter<ArticleData> getDrawerAdapter() {
+    @Override
+    protected ArticleDrawerAdapter getDrawerAdapter() {
         if (this.mArticleDrawerAdapter == null) {
-            this.mArticleDrawerAdapter = new ArticleDrawerAdapter(this);
+            this.mArticleDrawerAdapter = new ArticleDrawerAdapter(this, mHighlightColor);
         }
         return this.mArticleDrawerAdapter;
     }
 
     private void buildAdapter() {
         mArticleImageView = new ArticleImagePreviewView(this, mBackgroundColor);
-        this.mAdapter = new ArticleDataAdapter(this, mCurrentArticle, this, mArticleImageView, mArticleImageView, mColorIndex);
+        this.mAdapter = new ArticleDataAdapter(this, mCurrentArticle, this, mArticleImageView, mArticleImageView, mColorIndex, getDrawerAdapter());
         this.mListHeader = new ArticleHeaderView(this, this.mBackgroundColor);
 
         mListHeader.setClickable(false);
@@ -519,8 +521,16 @@ public class ArticleActivity
     protected void onDrawerItemClick(AdapterView<?> parent, View view, int position, long id) {
         super.onDrawerItemClick(parent, view, position, id);
 
-        final int i = position == 0 ? 0 : mAdapter.getPosition(mArticleDrawerAdapter.getItem(position - 1)) + 2;
+        ArticleData data = null;
+        if (position != 0){
+            data = mArticleDrawerAdapter.getItem(position - 1);
+        }
 
+        final int i = position == 0 ? 0 : mAdapter.getPosition(data) + 2;
+
+        if (data != null){
+            mArticleDrawerAdapter.onActiveTitleChanged(data);
+        }
         closeDrawer();
 
         mListView.post(new Runnable() {

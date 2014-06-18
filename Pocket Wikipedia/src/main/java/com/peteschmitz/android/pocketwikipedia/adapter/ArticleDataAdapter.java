@@ -2,6 +2,7 @@ package com.peteschmitz.android.pocketwikipedia.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,10 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
 
     private static final int TYPE_COUNT = ArticleData.ArticleDataLevel.values().length + 3;
 
+    public interface ActiveTitleListener{
+        void onActiveTitleChanged(ArticleData activeTitle);
+    }
+
     private List<ArticleData> mData = new LinkedList<ArticleData>();
     private String mCurrentArticle;
     private Map<ArticleData, ArticleTableView> mEmbedMap = new HashMap<ArticleData, ArticleTableView>();
@@ -47,13 +52,17 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
     private int mHighlightColor;
     private ImageEvaluation.Container mEvaluations;
     private GalleryActivity.GalleryPreviewListener mGalleryListener;
+    private List<Pair<Integer, ArticleData>> mTitleIndices = new LinkedList<Pair<Integer, ArticleData>>();
+    private int mActiveTitle = -1;
+    private ActiveTitleListener mTitleListener;
 
     public ArticleDataAdapter(Context context,
                               String currentArticle,
                               WikiLinkUtils.LinkListener linkListener,
                               @NotNull ImageEvaluation.Container evaluations,
                               GalleryActivity.GalleryPreviewListener galleryListener,
-                              int colorIndex) {
+                              int colorIndex,
+                              @Nullable ActiveTitleListener titleListener) {
         super(context, R.layout.article_data_text);
 
         mCurrentArticle = currentArticle;
@@ -61,6 +70,7 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
         mHighlightColor = context.getResources().getIntArray(R.array.highlight_colors)[colorIndex];
         mEvaluations = evaluations;
         mGalleryListener = galleryListener;
+        mTitleListener = titleListener;
     }
 
     @Override
@@ -72,20 +82,37 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
     public int getItemViewType(int position) {
         ArticleData data = getItem(position);
 
-        if (!TextUtils.isEmpty(data.title)) {
+        if (isTitleType(data)) {
             return data.level.ordinal();
-        } else if (!TextUtils.isEmpty(data.table)) {
+        } else if (isEmbedType(data)) {
             return TYPE_EMBED;
-        } else if (!TextUtils.isEmpty(data.div)) {
+        } else if (isDivType(data)) {
             return TYPE_DIV;
         }
 
         return TYPE_TEXT;
     }
 
+    private boolean isEmbedType(@NotNull ArticleData data){
+        return !TextUtils.isEmpty(data.table);
+    }
+
+    private boolean isTitleType(@NotNull ArticleData data){
+        return !TextUtils.isEmpty(data.title);
+    }
+
+    private boolean isDivType(@NotNull ArticleData data){
+        return !TextUtils.isEmpty(data.div);
+    }
+
+    private boolean isTextType(@NotNull ArticleData data){
+        return !isEmbedType(data) && !isTitleType(data) && !isDivType(data);
+    }
+
     @Nullable
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        adjustActiveTitle(position);
 
         int type = getItemViewType(position);
         final ArticleData item = getItem(position);
@@ -163,6 +190,8 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
         return view;
     }
 
+
+
     @Override
     public void clear() {
         super.clear();
@@ -179,9 +208,35 @@ public class ArticleDataAdapter extends ArrayAdapter<ArticleData> {
 
     @Override
     public void add(ArticleData object) {
+        if (isTitleType(object)){
+            mTitleIndices.add(new Pair<Integer, ArticleData>(getCount(), object));
+        }
+
         super.add(object);
         mData.add(object);
-        getEmbedView(object);
+
+        if (isEmbedType(object)){
+            getEmbedView(object);
+        }
+    }
+
+    private void adjustActiveTitle(int position){
+        Pair<Integer, ArticleData> last = null;
+        for (Pair<Integer, ArticleData> title : mTitleIndices){
+            if (title.first > position){
+                break;
+            }
+
+            last = title;
+        }
+
+        if (last != null && last.first != mActiveTitle){
+            mActiveTitle = last.first;
+
+            if (mTitleListener != null){
+                mTitleListener.onActiveTitleChanged(last.second);
+            }
+        }
     }
 
     public ArticleData[] getItems() {

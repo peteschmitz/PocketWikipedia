@@ -1,6 +1,7 @@
 package com.peteschmitz.android.pocketwikipedia.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -22,15 +23,17 @@ public class DrawerTitleView
     private View mDataView;
     private Context mContext;
     private Holder mHolder;
+    private int mHighlightColor;
 
-    public DrawerTitleView(@NotNull Context context) {
-        this(context, null);
+    public DrawerTitleView(@NotNull Context context, int highlightColor) {
+        this(context, null, highlightColor);
     }
 
-    public DrawerTitleView(@NotNull Context context, @Nullable AttributeSet attrs) {
+    public DrawerTitleView(@NotNull Context context, @Nullable AttributeSet attrs, int highlightColor) {
         super(context, attrs);
 
         this.mContext = context;
+        mHighlightColor = highlightColor;
     }
 
     public void setData(ArticleData data) {
@@ -44,6 +47,8 @@ public class DrawerTitleView
 
             this.mHolder.index = ((TextView) this.mDataView.findViewById(R.id.article_drawer_index_text));
             this.mHolder.index.setTypeface(FontManager.ALEO_LIGHT.getTypeface(this.mContext));
+
+            mHolder.layout = (LinearLayout) mDataView.findViewById(R.id.article_drawer_layout);
         }
         if (TextUtils.isEmpty(data.title)) {
             this.mHolder.title.setVisibility(View.GONE);
@@ -54,8 +59,13 @@ public class DrawerTitleView
         }
     }
 
+    public void setHighlight(boolean highlight){
+        mHolder.layout.setBackgroundColor(highlight ? mHighlightColor : Color.TRANSPARENT);
+    }
+
     private class Holder {
-        private TextView title;
-        private TextView index;
+        TextView title;
+        TextView index;
+        LinearLayout layout;
     }
 }
