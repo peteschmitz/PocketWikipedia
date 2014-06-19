@@ -77,7 +77,7 @@ public class QueryWikipedia extends Thread {
         if (!mShouldContinue) return;
 
         String request = mBuilder.toString();
-        Log.d(TAG, "Request: " + request);
+        //Log.d(TAG, "Request: " + request);
 
         try {
             String response = readJsonFromUrl(request);

@@ -2,6 +2,7 @@ package com.peteschmitz.android.pocketwikipedia.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -108,7 +109,13 @@ public class LandingActivity
     private void loadMainPage(Bundle bundle) {
         toggleProgressBar(true);
         if (bundle != null) {
-            this.mFrontPageSectionData = ((FrontPageSectionData[]) bundle.getParcelableArray(BundleKey.FRONT_PAGE_SECTIONS));
+            Parcelable[] pageSections =  bundle.getParcelableArray(BundleKey.FRONT_PAGE_SECTIONS);
+            if (pageSections != null && pageSections.length != 0){
+                mFrontPageSectionData = new FrontPageSectionData[pageSections.length];
+                for (int i = 0; i < pageSections.length; i++){
+                    mFrontPageSectionData[i] = (FrontPageSectionData) pageSections[i];
+                }
+            }
         }
         if (this.mFrontPageSectionData != null) {
             ArticleSummary articleSummary = bundle == null ? null : (ArticleSummary) bundle.getParcelable(BundleKey.RANDOM_ARTICLE_SUMMARY);

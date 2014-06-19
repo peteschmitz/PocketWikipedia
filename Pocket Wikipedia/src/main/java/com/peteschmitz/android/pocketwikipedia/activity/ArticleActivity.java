@@ -145,7 +145,7 @@ public class ArticleActivity
 
         ArrayList<ImageEvaluation> evaluations = mArticleImageView.getEvaluations();
         if (evaluations != null) {
-            outState.putParcelableArray(BundleKey.IMAGES, evaluations.toArray(new ImageEvaluation[evaluations.size()]));
+            outState.putParcelableArray(BundleKey.IMAGES, evaluations.toArray(new Parcelable[evaluations.size()]));
         }
         mArticleImageView.dispose();
     }

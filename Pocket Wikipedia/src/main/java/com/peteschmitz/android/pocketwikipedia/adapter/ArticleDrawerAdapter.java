@@ -1,7 +1,6 @@
 package com.peteschmitz.android.pocketwikipedia.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -54,6 +53,5 @@ public class ArticleDrawerAdapter
     public void onActiveTitleChanged(ArticleData activeTitle) {
         mActiveTitle = activeTitle;
         notifyDataSetChanged();
-        Log.d("pwiki drawer adapter", "Title Changed to: " + activeTitle.title);
     }
 }
