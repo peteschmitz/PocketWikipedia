@@ -1,6 +1,6 @@
 # Pocket Wikipedia
 
-![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/logo.webp "Logo Splash")
+![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/logo.png "Logo Splash")
 
 
 ## About
@@ -10,13 +10,13 @@ Lightweight Wikipedia application for browsing and discovering Wikipedia content
 6/8/2018: This project is not maintained and targets a very old sdk (19). The above was true back in the day - the original Wikipedia Android application was merely a webview wrapper. 
 
 
-![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_summary.webp "Article Summary")
+![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_summary.png "Article Summary")
 
 
-![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_navigation.webp "Article Navigation")
+![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_navigation.png "Article Navigation")
 
 
-![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_image_gallery.webp "Image Gallery")
+![alt text](https://github.com/peteschmitz/PocketWikipedia/tree/master/screenshots/tablet_image_gallery.png "Image Gallery")
 
 
 
